@@ -1,0 +1,7 @@
+cf_api_url: https://api.system.pcf.net
+cf_username: admin
+cf_password: ((cf-admin-password))
+cf_org: TESTORG
+cf_space: dev
+cf_domain: apps.pcf.net
+cf_app_route: service
