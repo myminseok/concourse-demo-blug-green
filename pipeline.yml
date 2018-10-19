@@ -14,7 +14,7 @@ resources:
 - name: source-repo
   type: git
   source:
-    branch: cf-locationapi 
+    branch: master 
     uri: git@github.com:test/test.git 
     private_key: ((pivotal_platform_github.private_key))
   check_every: 60s # for demo
