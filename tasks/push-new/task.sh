@@ -4,13 +4,14 @@ set -xe
 
 pwd
 ls -al
-
+cf version
 wget https://s3-us-west-1.amazonaws.com/cf-cli-releases/releases/v6.37.0/cf-cli-installer_6.37.0_x86-64.deb
 dpkg -i *.deb
 rm *.deb 
 cf version
 
-cf login -a $cf_api_url -u $cf_username -p $cf_password -o $cf_org -s $cf_space --skip-ssl-validation
+echo "cf login... $cf_api_url"
+cf login -a $cf_api_url -u $cf_username -p $cf_password -o $cf_org -s $cf_space --skip-ssl-validation &> /dev/null
 
 cf_domain="apps.pas.pcf.net"
 
