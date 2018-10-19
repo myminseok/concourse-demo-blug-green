@@ -11,10 +11,10 @@ rm *.deb
 cf version
 
 echo "cf login... $cf_api_url /dev/null"
-set +x
+#set +x
 #cf login -a $cf_api_url -u $cf_username -p $cf_password -o $cf_org -s $cf_space --skip-ssl-validation 2>&1 >/dev/null
 cf login -a $cf_api_url -u $cf_username -p $cf_password -o $cf_org -s $cf_space --skip-ssl-validation &>/dev/null
-set -x
+#set -x
 cf_domain="apps.pas.pcf.net"
 
 cf apps
