@@ -11,7 +11,7 @@ rm *.deb
 cf version
 
 set +x
-echo "cf login... $cf_api_url "
+echo "(credential hided) cf login to $cf_api_url "
 #cf login -a $cf_api_url -u $cf_username -p $cf_password -o $cf_org -s $cf_space --skip-ssl-validation &>/dev/null
 cf login -a $cf_api_url -u $cf_username -p $cf_password -o $cf_org -s $cf_space --skip-ssl-validation
 set -x
