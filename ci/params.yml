@@ -1,0 +1,11 @@
+cf_api_url: https://api.system.pcf.net
+cf_username: ((cf_user)) 
+cf_password: ((cf_password)) 
+cf_org: 
+cf_space: dev
+cf_domain: apps.pcf.net
+cf_app_route: service
+github-private-key: |
+  ---BEGIN -----
+  ---END -----
+

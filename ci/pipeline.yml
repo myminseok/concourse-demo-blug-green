@@ -1,0 +1,60 @@
+groups:
+- name: main
+  jobs:
+  - push_new
+  - map-route
+resource_types:
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
+    tag: latest
+
+resources:
+- name: source-repo
+  type: git
+  source:
+    branch: master 
+    uri: git@github.com:test/test.git 
+    private_key: {{github-private-key}}
+  check_every: 60s # for demo
+- name: slack-alert
+  type: slack-notification
+  source:
+    url: https://hooks.slack.com/services/xxxx
+
+jobs:
+- name: push_new
+  plan:
+  - get: source-repo
+    trigger: true
+  - task: push-new
+    file: source-repo/ci/tasks/push-new/task.yml
+    params:
+      cf_api_url: {{cf_api_url}}
+      cf_username: {{cf_username}}
+      cf_password: {{cf_password}}
+      cf_org: {{cf_org}}
+      cf_space: {{cf_space}}
+      cf_app_route: {{cf_app_route}}
+      cf_domain: {{cf_domain}}
+  - put: slack-alert
+    params:
+      channel: 'slack-channel'
+      text_file: results/message.txt
+
+- name: map-route
+  plan:
+  - get: source-repo
+    passed:
+      - push_new
+    trigger: false
+  - task: map-route
+    file: source-repo/ci/tasks/map-route/task.yml
+    params:
+      cf_api_url: {{cf_api_url}}
+      cf_username: {{cf_username}}
+      cf_password: {{cf_password}}
+      cf_org: {{cf_org}}
+      cf_space: {{cf_space}}
+      cf_app_route: {{cf_app_route}}
