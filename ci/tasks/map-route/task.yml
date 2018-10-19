@@ -1,0 +1,24 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: pivotalservices/docker-concourse-cf-tools
+    tag: "latest"
+
+inputs:
+- name: source-repo
+
+params:
+  cf_api_url:
+  cf_username:
+  cf_password:
+  cf_org:
+  cf_space:
+  cf_app_route:
+
+run:
+  path: /bin/bash
+  args: 
+    - source-repo/ci/tasks/map-route/task.sh
