@@ -20,6 +20,7 @@ params:
   cf_org:
   cf_space:
   cf_app_route:
+  cf_domain:
 
 run:
   path: /bin/bash
