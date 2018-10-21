@@ -4,6 +4,7 @@ groups:
   - webhook-job
   - push_new
   - map-route
+  - dummy
 
 resources:
 - name: source-repo
@@ -30,7 +31,7 @@ resources:
 - name: keyval
   type: keyval
   webhook_token: your_secure_random_webhooktoken
-
+# curl -k -X POST https://pcfdemo.net:9090/api/v1/teams/main/pipelines/demo-bg/resources/version-repo/check/webhook\?webhook_token\=your_secure_random_webhooktoken -v
 - name: version-repo 
   type: semver 
   source:
@@ -43,12 +44,31 @@ resources:
 
 
 jobs:
+- name: dummy 
+  plan: 
+  - get: keyval
+  - get: timer
+  - do:
+    - task: echo 
+      config:
+        platform: linux
+        image_resource:
+          type: docker-image
+          source:
+            repository: ubuntu
+        run:
+          path: sh
+          args:
+          - -exc
+          - |
+            echo "Hello $WORLD_PARAM"
+      params:
+        WORLD_PARAM: "hi"
+
 - name: webhook-job
   plan: 
   - get: version-repo 
     trigger: true
-  - get: keyval
-  - get: timer
   - do:
     - task: echo 
       config:
